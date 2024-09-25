@@ -22,8 +22,8 @@ const getBook = function () {
     <h5 class="card-title">${libro.title}</h5>
     <p class="card-text">${libro.category}</p>
     <p class="card-text">${libro.price}</p>
-     <button  class="btnBuy btn btn-primary">Compra ora</button>
-     <button  class="btnDiscard btn btn-primary">Scarta</button>
+     <button id="${libro.title}" class="btnBuy btn btn-primary">Compra ora</button>
+     <button id="${libro.title}"  class="btnDiscard btn btn-primary">Scarta</button>
   </div>
 </div>`;
         rowLibrary.appendChild(colLibrary);
@@ -32,6 +32,7 @@ const getBook = function () {
       const btnDiscard = document.querySelectorAll(".btnDiscard");
       btnBuy.forEach((button) => {
         button.addEventListener("click", () => {
+          const id = button.id;
           let booksInLocalStorage = localStorage.getItem(localStorageKey);
           if (!booksInLocalStorage) {
             booksInLocalStorage = [];
@@ -39,9 +40,11 @@ const getBook = function () {
             booksInLocalStorage = JSON.parse(booksInLocalStorage);
           }
           libri.forEach((libro) => {
-            // const newBook = { title: libro.title, category: libro.category, price: libro.price };
-            booksInLocalStorage.push(libro);
-            localStorage.setItem(localStorageKey, JSON.stringify(booksInLocalStorage));
+            if (libro.title === id) {
+              booksInLocalStorage.push(libro);
+              localStorage.setItem(localStorageKey, JSON.stringify(booksInLocalStorage));
+              //crea la lista dentro un carello
+            }
           });
         });
       });
@@ -58,4 +61,7 @@ getBook();
 //ciclo le row, ciclo le col e creo card all interno ciclando l'array che mi è stato dato?
 //faccio tutto a mano?
 
-// genero la lista di appuntamenti
+// genero la lista degli libri nel cart
+//svuotare la lista ogni volta anche local?
+
+//dare il d-none alla colonna e non alla card
